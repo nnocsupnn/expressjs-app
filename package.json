@@ -1,5 +1,5 @@
 {
-  "name": "expressjs-api",
+  "name": "expressjs-app",
   "version": "1.0.0",
   "description": "ExpressJS API for Medicard Projects",
   "main": "app.js",
