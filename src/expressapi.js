@@ -4,7 +4,6 @@ const cors = require('cors')
 const helmet = require('helmet')
 const morgan = require('morgan')
 const { getFileStream, config } = require('./util');
-const { cache } = require('./cache');
 /**
  * 
  * ## Implementation expressJS for custom use
@@ -132,7 +131,6 @@ module.exports.ExpressApi = class ExpressApi {
         let router = express.Router()
         routes.forEach(route => {
             router = route.method(router, route.args)
-            if (route.cacheEnabled) router.use(cache(parseInt(config.REQUEST_CACHING_TTL || 30), 200))
             console.log(`[${process.env.NODE_ENV}][ExpressApi] ${route.name || 'RouteName'} - route is registered.`)
         })
 

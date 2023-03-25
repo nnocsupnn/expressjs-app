@@ -59,7 +59,7 @@ const apiInstance = new ExpressApi(apiOptions)
 apiInstance.registerRoutesGroup(
         "/api",
         {
-            method: app, args: undefined, name: 'app', enableCache: true
+            method: app, args: undefined, name: 'app'
         }
     )
     .registerMiddlewares(headers, unauthorize)
@@ -83,6 +83,5 @@ PORT=3000
 LOG_FORMAT=combined # default 'combined',
 LOG_SIZE='10M' # default '10M',
 LOG_INTERVAL='1d' # default '1d',
-LOG_MAX_FILES=10 # default 10,
-REQUEST_CACHING_TTL=30 # default 30
+LOG_MAX_FILES=10 # default 10
 ```
