@@ -1,7 +1,8 @@
 const { existsSync, mkdirSync } = require('fs')
+const { join }  = require('path')
 const rfs = require('rotating-file-stream')
 
-module.exports.config = {
+const config = {
     LOG_FORMAT: process.env.LOG_FORMAT || 'combined',
     LOG_SIZE: process.env.LOG_SIZE ||'10M',
     LOG_INTERVAL: process.env.LOG_INTERVAL ||'1d',
@@ -9,8 +10,9 @@ module.exports.config = {
     REQUEST_CACHING_TTL: parseInt(process.env.REQUEST_CACHING || 30)
 }
 
-module.exports.getFileStream = (type) => {
-    const dirPath = join(__dirname, '../', 'logs')
+
+const getFileStream = (type) => {
+    const dirPath = join(process.cwd(), 'logs')
     const createFileName = (time, index) => {
         if (!time) {
             return `${type}-current.log`
@@ -33,3 +35,6 @@ module.exports.getFileStream = (type) => {
         compress: 'gzip'
     })
 }
+
+module.exports.getFileStream = getFileStream
+module.exports.config = config
