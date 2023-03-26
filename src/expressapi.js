@@ -14,7 +14,7 @@ const { getFileStream, config } = require('./util');
  * @param docsModule module for the documentation - only available for Swagger docs
  * @param enableLog flag to enable or disable log. Default is `false`
  */
-module.exports.ExpressApi = class ExpressApi {
+module.exports = class ExpressApi {
     constructor(options = {}) {
         this.server = express()
         this.port = process.env.PORT || 3000
