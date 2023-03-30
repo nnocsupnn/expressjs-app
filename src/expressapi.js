@@ -3,7 +3,7 @@ const passport = require('passport');
 const cors = require('cors')
 const helmet = require('helmet')
 const morgan = require('morgan')
-const { getFileStream, config } = require('./util');
+const { getFileStream, config, isAsync } = require('./util');
 /**
  * 
  * ## Implementation expressJS for custom use
@@ -201,7 +201,6 @@ module.exports = class ExpressApi {
     /**
      * ### Start the server instance
      * @param {*} callback set the callback for `listen`
-     * @param {*} baseUri URI of the resource
      * @param {*} port port of the server
      */
     start(callback = async () => { }, port = 0) {
@@ -211,7 +210,12 @@ module.exports = class ExpressApi {
 
         this.server.listen(this.port, async () => {
             console.log(`[${process.env.NODE_ENV}][ExpressApi] API Started @ port ${this.port}`)
-            await callback()
+            
+            if (isAsync(callback)) {
+                await callback()
+            } else {
+                callback()
+            }
         })
     }
 }

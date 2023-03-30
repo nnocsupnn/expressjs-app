@@ -105,6 +105,11 @@ const HttpStatus = {
     NETWORK_AUTHENTICATION_REQUIRED: 511
 }
 
+module.exports.isAsync = fn => {
+    const AsyncFunc = (async () => {}).constructor;
+    return fn instanceof AsyncFunc
+}
+
 module.exports.getFileStream = getFileStream
 module.exports.config = config
 module.exports.HttpStatus = HttpStatus
