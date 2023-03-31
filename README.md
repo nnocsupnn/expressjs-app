@@ -8,12 +8,13 @@
 # Usage:
 
 ```javascript
+const { ExpressApi, LogOption } = require("expressjs-app")
 
 const apiOptions = { 
     enableCors: true, 
     lastRouteHandler: invalid, // Method for handling 404 not found routes
     docsModule: swaggerDoc, // Swagger Docs
-    enableLog: true,
+    enableLog: true, // Log option can also accept LogOption { path: '/logs' }
     jwtStrategy: jwtStrategy // JWT Strategy, this package uses passport-jwt for authentication, if this provided as option make sure you enable `registerAuthenticationRoute`
 }
 
@@ -51,7 +52,7 @@ const apiOptions = {
     enableCors: true, 
     // lastRouteHandler: invalid, // Method for handling 404 not found routes
     // docsModule: swaggerDoc, // Swagger Docs
-    enableLog: true,
+    enableLog: true, // Log option can also accept LogOption { path: '/logs' }
     // jwtStrategy: jwtStrategy // JWT Strategy, this package uses passport-jwt for authentication, if this provided as option make sure you enable `registerAuthenticationRoute`
 }
 

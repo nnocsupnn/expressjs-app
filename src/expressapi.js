@@ -3,7 +3,7 @@ const passport = require('passport');
 const cors = require('cors')
 const helmet = require('helmet')
 const morgan = require('morgan')
-const { getFileStream, config, isAsync } = require('./util');
+const { getFileStream, config, isAsync, LogOption } = require('./util');
 /**
  * 
  * ## Implementation expressJS for custom use
@@ -46,14 +46,18 @@ module.exports = class ExpressApi {
             this.createLogFor('access')
             this.createLogFor('error')
             console.info(`[${process.env.NODE_ENV}][ExpressApi] Logging enabled.`)
+        } else if ('enableLog' in options && options.enableLog instanceof LogOption.constructor) {
+            this.createLogFor('access', options.enableLog.path)
+            this.createLogFor('error', options.enableLog.path)
+            console.info(`[${process.env.NODE_ENV}][ExpressApi] Logging enabled.`)
         }
     }
 
 
-    createLogFor(type = 'access') {
+    createLogFor(type = 'access', path = undefined) {
         // const logFile = createWriteStream(`./${type}.log`, { flags: 'a' });
 
-        const options = { stream: getFileStream(type) }
+        const options = { stream: getFileStream(type, path) }
 
         options.skip = function (req, res) {
             return res.statusCode > 301

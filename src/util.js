@@ -1,6 +1,7 @@
 const { existsSync, mkdirSync } = require('fs')
 const { join }  = require('path')
 const rfs = require('rotating-file-stream')
+const logFolder = process.env.LOG_FOLDER || join(process.cwd(), 'logs')
 
 const config = {
     LOG_FORMAT: process.env.LOG_FORMAT || 'combined',
@@ -11,8 +12,8 @@ const config = {
 }
 
 
-const getFileStream = (type) => {
-    const dirPath = join(process.cwd(), 'logs')
+const getFileStream = (type, path) => {
+    const logPath = path !== undefined ? path : logFolder
     const createFileName = (time, index) => {
         if (!time) {
             return `${type}-current.log`
@@ -23,7 +24,7 @@ const getFileStream = (type) => {
             filename += `.${index}`;
         }
 
-        return `${type}-${filename}.log.gz`;
+        return join(logPath, `${type}-${filename}.log.gz`);
     };
 
     return rfs.createStream(createFileName, {
@@ -31,7 +32,7 @@ const getFileStream = (type) => {
         maxSize: config.LOG_SIZE,
         maxFiles: config.LOG_MAX_FILES,
         initialRotation: true,
-        path: dirPath,
+        path: logPath,
         compress: 'gzip'
     })
 }
@@ -108,6 +109,10 @@ const HttpStatus = {
 module.exports.isAsync = fn => {
     const AsyncFunc = (async () => {}).constructor;
     return fn instanceof AsyncFunc
+}
+
+module.exports.LogOption = {
+    path: logFolder
 }
 
 module.exports.getFileStream = getFileStream
