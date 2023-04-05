@@ -139,7 +139,6 @@ module.exports = class ExpressApi {
         })
 
         console.info(`[${process.env.NODE_ENV}][ExpressApi] Configured baseUri ${baseUri}`)
-        this.server.use(baseUri, router)
 
         // Add router
         this.groupRouters[baseUri] = router
@@ -173,9 +172,9 @@ module.exports = class ExpressApi {
         this.server.use(this.passport.initialize());
         this.passport = this.passport.use(this.jwtStrategy)
 
-        authRoute(baseUri, this.server)
+        this.server = authRoute(baseUri, this.server)
 
-        this.server.all((protectExpr.includes("*") ? protectExpr : `${protectExpr}*`), this.passport.authenticate('jwt', { session: false, failWithError: true }))
+        this.server.all((protectExpr.includes("*") ? protectExpr : `${protectExpr}**`), this.passport.authenticate('jwt', { session: false, failWithError: true }))
         
         console.log(`[${process.env.NODE_ENV}][ExpressApi] Authentication is configured to this path: ${protectExpr}`)
 
@@ -209,6 +208,10 @@ module.exports = class ExpressApi {
      */
     start(callback = async () => { }, port = 0) {
         if (port != 0) this.port = port
+
+        for (let uri in this.groupRouters) {
+            this.server.use(uri, this.groupRouters[uri])
+        }
 
         if (this.lastRouteHandler !== undefined && typeof this.lastRouteHandler === 'function') this.server.use(this.lastRouteHandler)
 
