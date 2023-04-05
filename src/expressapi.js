@@ -168,7 +168,7 @@ module.exports = class ExpressApi {
      */
     registerAuthenticationRoute(baseUri = '/api', authRoute = () => { }, protectExpr = "*") {
         if (this.jwtStrategy == undefined) throw Error("jwtStrategy is not properly defined.")
-        this.server.use(express.json());
+        // this.server.use(express.json());
         this.server.use(this.passport.initialize());
         this.passport = this.passport.use(this.jwtStrategy)
 

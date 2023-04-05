@@ -1,24 +1,13 @@
 ## ExpressJS API - Custom Implementation
 
-### This project was intially developed to customized and ease the usage of configuring express framework.
+: This project was intially developed to customized and ease the usage of configuring express framework.
 
-<br/>
-<br/>
+---
 
-# Usage:
+## Usage
 
 ```javascript
 const { ExpressApi, LogOption } = require("expressjs-app")
-
-const apiOptions = { 
-    enableCors: true, 
-    lastRouteHandler: invalid, // Method for handling 404 not found routes
-    docsModule: swaggerDoc, // Swagger Docs
-    enableLog: true, // Log option can also accept LogOption { path: '/logs' }
-    jwtStrategy: jwtStrategy // JWT Strategy, this package uses passport-jwt for authentication, if this provided as option make sure you enable `registerAuthenticationRoute`
-}
-
-const { ExpressApi } = require("expressjs-app")
 
 const app = (router, ...args) => {
     router.get('/', (req, res) => {
@@ -71,10 +60,10 @@ apiInstance.registerRoutesGroup(
 
 ```
 
-<br/>
-<Br/>
+---
 
-## For Configuration option
+## Configuration
+
 ```env
 NODE_ENV=staging
 SECRET_KEY=pass123!
