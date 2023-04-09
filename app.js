@@ -14,4 +14,4 @@ module.exports.HttpStatus = HttpStatus
 module.exports.ExpressApi = ExpressApi
 module.exports.LogOption = LogOption
 // Export all component class
-module.exports = require('./src/components')
+module.exports.components = require('./src/components')
