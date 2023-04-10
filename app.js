@@ -5,12 +5,13 @@
  * @memberof Medicard
  */
 
-const { HttpStatus, LogOption } = require("./src/util")
+const { HttpStatus, LogOption, HttpStatusMessage } = require("./src/util")
 const ExpressApi = require("./src/expressapi")
 
 
 // Exports
 module.exports.HttpStatus = HttpStatus
+module.exports.HttpStatusMessage = HttpStatusMessage
 module.exports.ExpressApi = ExpressApi
 module.exports.LogOption = LogOption
 // Export all component class
