@@ -25,8 +25,8 @@ module.exports = class ExpressApi {
         this.jwtStrategy = undefined
 
         if (enableCors) this.server.use(cors())
-        if (lastRouteHandler === 'function') this.lastRouteHandler = lastRouteHandler
-        if (docsModule === 'function') {
+        if (typeof lastRouteHandler === 'function') this.lastRouteHandler = lastRouteHandler
+        if (typeof docsModule === 'function') {
             docsModule(this.server)
             console.info(`[${process.env.NODE_ENV}][ExpressApi] Registered docs`)
         }
