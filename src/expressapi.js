@@ -15,7 +15,7 @@ const { getFileStream, config, isAsync, LogOption } = require('./util');
  * @param enableLog flag to enable or disable log. Default is `false`
  */
 module.exports = class ExpressApi {
-    constructor({ enableCors, lastRouteHandler, docsModule, enableLog, jwtStrategy } = { enableCors: true, lastRouteHandler: (req, res) => {}, docsModule: (server) => {}, enableLog: LogOption(), jwtStrategy: Object }) {
+    constructor({ enableCors, lastRouteHandler, docsModule, enableLog, jwtStrategy } = { enableCors: true, lastRouteHandler: (req, res) => {}, docsModule: (server) => {}, enableLog: LogOption(), jwtStrategy: undefined }) {
         this.server = express()
         this.port = process.env.PORT || 3000
         this.router = express.Router()
@@ -24,14 +24,14 @@ module.exports = class ExpressApi {
         this.lastRouteHandler = undefined
         this.jwtStrategy = undefined
 
-        if ('enableCors' in options && options.enableCors) this.server.use(cors())
-        if ('lastRouteHandler' in options && options.lastRouteHandler && typeof options.lastRouteHandler === 'function') this.lastRouteHandler = options.lastRouteHandler
-        if ('docsModule' in options && options.docsModule && typeof options.docsModule === 'function') {
+        if (enableCors) this.server.use(cors())
+        if (lastRouteHandler === 'function') this.lastRouteHandler = options.lastRouteHandler
+        if (docsModule === 'function') {
             options.docsModule(this.server)
             console.info(`[${process.env.NODE_ENV}][ExpressApi] Registered docs`)
         }
 
-        if ('jwtStrategy' in options) {
+        if (jwtStrategy != undefined) {
             this.jwtStrategy = options.jwtStrategy
         }
 
@@ -41,7 +41,7 @@ module.exports = class ExpressApi {
         // The express.json() function is a built-in middleware function in Express. It parses incoming requests with JSON payloads and is based on body-parser.
         this.server.use(express.json())
 
-        if ('enableLog' in options && options.enableLog && options.enableLog == true) {
+        if (enableLog) {
             // Register logger
             this.createLogFor('access')
             this.createLogFor('error')
