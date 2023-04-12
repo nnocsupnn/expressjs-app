@@ -15,7 +15,7 @@ const { getFileStream, config, isAsync, LogOption } = require('./util');
  * @param enableLog flag to enable or disable log. Default is `false`
  */
 module.exports = class ExpressApi {
-    constructor(options = {}) {
+    constructor({ enableCors, lastRouteHandler, docsModule, enableLog, jwtStrategy } = { enableCors: true, lastRouteHandler: (req, res) => {}, docsModule: (server) => {}, enableLog: LogOption(), jwtStrategy: Object }) {
         this.server = express()
         this.port = process.env.PORT || 3000
         this.router = express.Router()
