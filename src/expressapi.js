@@ -25,14 +25,14 @@ module.exports = class ExpressApi {
         this.jwtStrategy = undefined
 
         if (enableCors) this.server.use(cors())
-        if (lastRouteHandler === 'function') this.lastRouteHandler = options.lastRouteHandler
+        if (lastRouteHandler === 'function') this.lastRouteHandler = lastRouteHandler
         if (docsModule === 'function') {
-            options.docsModule(this.server)
+            docsModule(this.server)
             console.info(`[${process.env.NODE_ENV}][ExpressApi] Registered docs`)
         }
 
         if (jwtStrategy != undefined) {
-            this.jwtStrategy = options.jwtStrategy
+            this.jwtStrategy = jwtStrategy
         }
 
         // Helment adds required security headers in the middleware
@@ -41,14 +41,14 @@ module.exports = class ExpressApi {
         // The express.json() function is a built-in middleware function in Express. It parses incoming requests with JSON payloads and is based on body-parser.
         this.server.use(express.json())
 
-        if (enableLog) {
+        if (enableLog == true) {
             // Register logger
             this.createLogFor('access')
             this.createLogFor('error')
             console.info(`[${process.env.NODE_ENV}][ExpressApi] Logging enabled.`)
-        } else if ('enableLog' in options && options.enableLog instanceof LogOption.constructor) {
-            this.createLogFor('access', options.enableLog.path)
-            this.createLogFor('error', options.enableLog.path)
+        } else if (enableLog instanceof LogOption.constructor) {
+            this.createLogFor('access', enableLog.path)
+            this.createLogFor('error', enableLog.path)
             console.info(`[${process.env.NODE_ENV}][ExpressApi] Logging enabled.`)
         }
     }
