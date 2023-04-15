@@ -4,6 +4,12 @@
 
 ---
 
+## Installation
+
+```bash
+npm install expressjs-app
+```
+
 ## Usage
 
 ```javascript
