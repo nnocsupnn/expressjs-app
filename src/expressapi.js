@@ -209,8 +209,12 @@ module.exports = class ExpressApi {
     start(callback = async () => { }, port = 0) {
         if (port != 0) this.port = port
 
-        for (let uri in this.groupRouters) {
-            this.server.use(uri, this.groupRouters[uri])
+        if (Object.keys(this.groupRouters).length) {
+            for (let uri in this.groupRouters) {
+                this.server.use(uri, this.groupRouters[uri])
+            }
+        } else {
+            this.server.use(this.router)
         }
 
         if (this.lastRouteHandler !== undefined && typeof this.lastRouteHandler === 'function') this.server.use(this.lastRouteHandler)
