@@ -8,8 +8,8 @@ module.exports.Swagger = class Swagger {
 
     serveDocs (app) {
         const swaggerSpec = swaggerJSDoc(this.config);
-        app.use('/docs/spec.json', (req, res) => res.json(swaggerSpec))
-        app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+        app.use(`${process.env.API_BASE_PATH || ''}/docs/spec.json`, (req, res) => res.json(swaggerSpec))
+        app.use(`${process.env.API_BASE_PATH || ''}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
             swaggerOptions: {
                 urls: [
                     {

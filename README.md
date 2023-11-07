@@ -72,6 +72,7 @@ apiInstance.registerRoutesGroup(
 
 ```env
 NODE_ENV=staging
+API_BASE_PATH=/
 SECRET_KEY=pass123!
 PORT=3000
 
