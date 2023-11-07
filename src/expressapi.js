@@ -4,6 +4,8 @@ const cors = require('cors')
 const helmet = require('helmet')
 const morgan = require('morgan')
 const { getFileStream, config, isAsync, LogOption } = require('./util');
+const { Swagger } = require('./components/swagger');
+
 /**
  * 
  * ## Implementation expressJS for custom use
@@ -28,6 +30,12 @@ module.exports = class ExpressApi {
         if (typeof lastRouteHandler === 'function') this.lastRouteHandler = lastRouteHandler
         if (typeof docsModule === 'function') {
             docsModule(this.server)
+            console.info(`[${process.env.NODE_ENV}][ExpressApi] Registered docs`)
+        }
+
+        if (typeof docsModule === 'object') {
+            const swagger = new Swagger(docsModule)
+            swagger.serveDocs(this.server)
             console.info(`[${process.env.NODE_ENV}][ExpressApi] Registered docs`)
         }
 
