@@ -5,6 +5,7 @@ const helmet = require('helmet')
 const morgan = require('morgan')
 const { getFileStream, config, isAsync, LogOption } = require('./util');
 const { Swagger } = require('./components/swagger');
+const bodyParser = require('body-parser')
 
 /**
  * 
@@ -48,6 +49,7 @@ module.exports = class ExpressApi {
 
         // The express.json() function is a built-in middleware function in Express. It parses incoming requests with JSON payloads and is based on body-parser.
         this.server.use(express.json())
+        this.server.use(bodyParser.urlencoded({ extended: true }))
 
         if (enableLog == true) {
             // Register logger
