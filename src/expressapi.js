@@ -18,7 +18,7 @@ const bodyParser = require('body-parser')
  * @param enableLog flag to enable or disable log. Default is `false`
  */
 module.exports = class ExpressApi {
-    constructor({ enableCors, lastRouteHandler, docsModule, enableLog, jwtStrategy } = { enableCors: true, lastRouteHandler: (req, res) => {}, docsModule: (server) => {}, enableLog: LogOption(), jwtStrategy: undefined, clientMaxBodySize: "50m" }) {
+    constructor({ enableCors, lastRouteHandler, docsModule, enableLog, jwtStrategy, clientMaxBodySize } = { enableCors: true, lastRouteHandler: (req, res) => {}, docsModule: (server) => {}, enableLog: LogOption(), jwtStrategy: undefined, clientMaxBodySize: "50m" }) {
         this.server = express()
         this.port = process.env.PORT || 3000
         this.router = express.Router()
@@ -49,7 +49,7 @@ module.exports = class ExpressApi {
 
         // The express.json() function is a built-in middleware function in Express. It parses incoming requests with JSON payloads and is based on body-parser.
         this.server.use(express.json({ limit: clientMaxBodySize }))
-        this.server.use(bodyParser.urlencoded({ extended: true }))
+        this.server.use(bodyParser.urlencoded({ extended: true, limit: clientMaxBodySize }))
 
         if (enableLog == true) {
             // Register logger
