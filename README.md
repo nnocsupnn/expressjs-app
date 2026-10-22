@@ -1,3 +1,7 @@
+# ⚠️ DEPRECATED 
+This package is no longer supported or maintained. Please use [Alternative Package](URL) instead.
+
+
 ## ExpressJS API - Custom Implementation
 
 : This project was intially developed to customized and ease the usage of configuring express framework.
